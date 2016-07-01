@@ -11,15 +11,15 @@ namespace SignalR
     {
         public void InsertRow(Person person)
         {
-            Clients.AllExcept(Context.ConnectionId).receiveNewRow(new JavaScriptSerializer().Serialize(person));
+            Clients.All.receiveNewRow(new JavaScriptSerializer().Serialize(person));
         }
         public void UpdateRow(Person person)
         {
-            Clients.AllExcept(Context.ConnectionId).receiveUpdatedRow(new JavaScriptSerializer().Serialize(person));
+            Clients.All.receiveUpdatedRow(new JavaScriptSerializer().Serialize(person));
         }
         public void RemoveRow(int id)
         {
-            Clients.AllExcept(Context.ConnectionId).receiveRemovedRow(id);
+            Clients.All.receiveRemovedRow(id);
         }
     }
     public class Person
