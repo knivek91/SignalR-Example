@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System    ;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +9,29 @@ namespace SignalR
 {
     public class TableHub : Hub
     {
+
+        #region Override Method
+
+        public override System.Threading.Tasks.Task OnConnected()
+        {
+            return base.OnConnected();
+        }
+
+        public override System.Threading.Tasks.Task OnDisconnected()
+        {
+            return base.OnDisconnected();
+        }
+
+        #endregion
+
+        #region Public Method
         public void InsertRow(Person person)
         {
-            Clients.All.receiveNewRow(new JavaScriptSerializer().Serialize(person));
+            try
+            {
+                Clients.All.receiveNewRow(new JavaScriptSerializer().Serialize(person));
+            }
+            catch (Exception) { /* Clients.Caller.dis */ }
         }
         public void UpdateRow(Person person)
         {
@@ -21,11 +41,15 @@ namespace SignalR
         {
             Clients.All.receiveRemovedRow(id);
         }
+        #endregion
+
     }
+
     public class Person
     {
         public int ID { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
     }
+
 }

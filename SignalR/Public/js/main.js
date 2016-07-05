@@ -127,7 +127,7 @@ connection.client.receiveNewRow = function (person) {
         }
     }
 
-};
+}
 
 connection.client.receiveUpdatedRow = function (person) {
 
@@ -153,6 +153,14 @@ connection.client.receiveRemovedRow = function (id) {
             }
         }
     }
+}
+
+connection.client.newUserConnected = function (msg) {
+    toastr.success(msg);
+}
+
+connection.client.newUserConnected = function (msg) {
+    toastr.error(msg);
 }
 
 // Server's Methods
