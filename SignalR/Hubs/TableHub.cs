@@ -1,4 +1,4 @@
-﻿using System    ;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -40,6 +40,22 @@ namespace SignalR
         public void RemoveRow(int id)
         {
             Clients.All.receiveRemovedRow(id);
+        }
+        public void InitSession()
+        {
+            if (System.Web.HttpContext.Current.Session != null)
+            {
+                System.Web.HttpContext.Current.Session.Timeout = 1;
+                if (System.Web.HttpContext.Current.Session["_TSession"] == null)
+                {
+                    System.Web.HttpContext.Current.Session["_TSession"] = System.Web.HttpContext.Current.Session["ABC"] = new TableHub();
+                }
+            }
+        }
+        public void SessionEnd()
+        {
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<TableHub>();
+            hubContext.Clients.All.sessionEnd();
         }
         #endregion
 

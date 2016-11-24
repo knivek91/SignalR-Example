@@ -111,6 +111,11 @@ jq.ready(function () {
 
 });
 
+// Server Method
+setTimeout(function () {
+    connection.server.initSession();
+}, 1000);
+
 // Client's methods
 connection.client.receiveNewRow = function (person) {
 
@@ -161,6 +166,10 @@ connection.client.newUserConnected = function (msg) {
 
 connection.client.newUserConnected = function (msg) {
     toastr.error(msg);
+}
+
+connection.client.sessionEnd = function () {
+    toastr.warning('Your session expired. Go to Login.');
 }
 
 // Server's Methods

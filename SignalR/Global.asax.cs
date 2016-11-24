@@ -21,5 +21,17 @@ namespace SignalR
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
 
+        void Session_Start(Object sender, EventArgs E)
+        {
+        }
+
+        void Session_End(Object sender, EventArgs E)
+        {
+
+            TableHub hub = new TableHub();
+            hub.SessionEnd();
+
+        }
+
     }
 }
