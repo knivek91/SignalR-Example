@@ -14,7 +14,7 @@ namespace SignalR
         public void Configuration(IAppBuilder app)
         {
             app.MapSignalR();
-            // GlobalHost.HubPipeline.RequireAuthentication(); // For autenticated user in all the app
+            GlobalHost.HubPipeline.RequireAuthentication(); // For autenticated user in all the app
         }
     }
 }

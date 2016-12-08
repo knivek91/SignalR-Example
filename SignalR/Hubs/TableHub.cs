@@ -5,7 +5,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using System.Web.Script.Serialization;
 
-namespace SignalR
+namespace Hubs
 {
     public class TableHub : Hub
     {
@@ -14,24 +14,30 @@ namespace SignalR
 
         public override System.Threading.Tasks.Task OnConnected()
         {
+            Clients.All.newUserConnected("New User Online.");
             return base.OnConnected();
         }
 
         public override System.Threading.Tasks.Task OnDisconnected()
         {
+            Clients.All.newUserDisconnected("New User Online.");
             return base.OnDisconnected();
         }
 
         #endregion
 
         #region Public Method
+        [CustomAuthorizeClaim]
         public void InsertRow(Person person)
         {
             try
             {
+                Models.Home homeModel = new Models.Home();
+                homeModel.setConnectionId(Context.ConnectionId);
+                
                 Clients.All.receiveNewRow(new JavaScriptSerializer().Serialize(person));
             }
-            catch (Exception) { /* Clients.Caller.dis */ }
+            catch (Exception) { }
         }
         public void UpdateRow(Person person)
         {
@@ -52,10 +58,12 @@ namespace SignalR
                 }
             }
         }
-        public void SessionEnd()
+        public void SessionEnd(string sessionId)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<TableHub>();
-            hubContext.Clients.All.sessionEnd();
+            Models.Home homeModel = new Models.Home();
+            string connectionId = homeModel.getConnectionId();
+            hubContext.Clients.User(connectionId).sessionEnd();
         }
         #endregion
 

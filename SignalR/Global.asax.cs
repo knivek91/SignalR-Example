@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hubs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,6 +20,7 @@ namespace SignalR
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
         }
 
         void Session_Start(Object sender, EventArgs E)
@@ -27,10 +29,9 @@ namespace SignalR
 
         void Session_End(Object sender, EventArgs E)
         {
-
             TableHub hub = new TableHub();
-            hub.SessionEnd();
-
+            hub.SessionEnd(this.Session["ConnectionId"].ToString());
+            //this.Session.SessionID
         }
 
     }

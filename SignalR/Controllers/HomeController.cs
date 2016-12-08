@@ -13,6 +13,7 @@ namespace SignalR.Controllers
 
         public ActionResult Index()
         {
+            System.Web.HttpContext.Current.Session["ConnectionId"] = "";
             return View();
         }
 

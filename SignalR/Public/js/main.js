@@ -1,7 +1,22 @@
 ﻿var jq = $(document);
+//$.connection.url = 'http://localhost:34291/signalr';
+$.connection.hub.qs = { 'uid': 'mytoken' };
 var connection = $.connection.tableHub;
 toastr.options.positionClass = "toast-top-left";
 toastr.options.closeButton = true;
+
+//connection.connectionSlow(function () {
+//    console.log('We are currently experiencing difficulties with the connection.');
+//});
+
+//connection.error(function (error) {
+//    console.log('SignalR error: ' + error)
+//});
+
+// for catch error in each request
+//.fail(function(error) { 
+//    console.log( 'newContosoChatMessage error: ' + error) 
+//});
 
 var person = function () {
 
@@ -101,6 +116,10 @@ var person = function () {
 // Stablish the connection
 $.connection.hub.start();
 
+//connection.error(function (error) {
+//    console.log('SignalR error: ' + error)
+//});
+
 // Literal Object
 var Person = person();
 
@@ -170,6 +189,14 @@ connection.client.newUserConnected = function (msg) {
 
 connection.client.sessionEnd = function () {
     toastr.warning('Your session expired. Go to Login.');
+}
+
+connection.client.newUserConnected = function (msg) {
+    toastr.success(msg);
+}
+
+connection.client.newUserDisconnected = function (msg) {
+    toastr.error(msg);
 }
 
 // Server's Methods
