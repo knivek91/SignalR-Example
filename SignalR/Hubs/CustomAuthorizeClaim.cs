@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Hubs
 {
-    [AttributeUsage(AttributeTargets.All    , Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     public class CustomAuthorizeClaim : AuthorizeAttribute
     {
         // despues llama este

@@ -8,7 +8,6 @@ namespace Models
     public class Home
     {
 
-
         #region Set Connection ID
 
         public bool setConnectionId(string pConnection)
@@ -25,5 +24,6 @@ namespace Models
             return System.Web.HttpContext.Current.Session["ConnectionId"].ToString();
         }
         #endregion
+
     }
 }

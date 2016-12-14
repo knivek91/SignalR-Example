@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using System.Web.Script.Serialization;
+using Models;
 
 namespace Hubs
 {
@@ -15,11 +16,18 @@ namespace Hubs
         public override System.Threading.Tasks.Task OnConnected()
         {
             Clients.All.newUserConnected("New User Online.");
+            string id = Context.ConnectionId;
+            string group = Context.Request.Cookies["ASP.NET_SessionId"].Value;
+
+            Session.Instancia.updateConnectionIdByCookie(group, id);
+
             return base.OnConnected();
         }
 
         public override System.Threading.Tasks.Task OnDisconnected()
         {
+            string id = Context.ConnectionId;
+            string group = Context.Request.Cookies["ASP.NET_SessionId"].Value;
             Clients.All.newUserDisconnected("New User Online.");
             return base.OnDisconnected();
         }
@@ -32,8 +40,6 @@ namespace Hubs
         {
             try
             {
-                Models.Home homeModel = new Models.Home();
-                homeModel.setConnectionId(Context.ConnectionId);
                 
                 Clients.All.receiveNewRow(new JavaScriptSerializer().Serialize(person));
             }
@@ -61,10 +67,12 @@ namespace Hubs
         public void SessionEnd(string sessionId)
         {
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<TableHub>();
-            Models.Home homeModel = new Models.Home();
-            string connectionId = homeModel.getConnectionId();
-            hubContext.Clients.User(connectionId).sessionEnd();
+            string connectionId = Session.Instancia.getConnectionIdByCookie(sessionId);
+            //hubContext.Clients.All.sessionEnd(connectionId);
+            hubContext.Clients.Client(connectionId).sessionEnd(connectionId);
         }
+
+
         #endregion
 
     }

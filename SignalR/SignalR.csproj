@@ -131,6 +131,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Hubs\AuthorizeHub.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -141,6 +142,7 @@
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\CustomAuthorizeClaim.cs" />
     <Compile Include="Models\Home.cs" />
+    <Compile Include="Models\Session.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StartUp.cs" />
     <Compile Include="Hubs\TableHub.cs" />
@@ -188,6 +190,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

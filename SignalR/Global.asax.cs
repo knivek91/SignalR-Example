@@ -25,12 +25,16 @@ namespace SignalR
 
         void Session_Start(Object sender, EventArgs E)
         {
+            var a = this.Session.SessionID; // es lo mismo que hacer -> Context.Request.Cookies["ASP.NET_SessionId"].Value
+
+            Models.Session.Instancia.addConnection(a, "");
+
         }
 
         void Session_End(Object sender, EventArgs E)
         {
             TableHub hub = new TableHub();
-            hub.SessionEnd(this.Session["ConnectionId"].ToString());
+            hub.SessionEnd(this.Session.SessionID);
             //this.Session.SessionID
         }
 

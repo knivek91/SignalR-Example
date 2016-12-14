@@ -132,7 +132,7 @@ jq.ready(function () {
 
 // Server Method
 setTimeout(function () {
-    connection.server.initSession();
+    //connection.server.initSession();
 }, 1000);
 
 // Client's methods
@@ -187,7 +187,8 @@ connection.client.newUserConnected = function (msg) {
     toastr.error(msg);
 }
 
-connection.client.sessionEnd = function () {
+connection.client.sessionEnd = function (cn) {
+    console.log(cn);
     toastr.warning('Your session expired. Go to Login.');
 }
 
